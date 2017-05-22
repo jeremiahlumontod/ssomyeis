@@ -75,6 +75,7 @@
 
 	<build>
         <!-- for the moment, manually rename war to ssomyeis...the root context -->
+        <finalName>ssomyeis</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
