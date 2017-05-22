@@ -74,10 +74,14 @@
 	</dependencies>
 
 	<build>
+        <!-- this will get rid of version info from war file name -->
+        <!-- if deployed in tomcat, this will become the root context -->
+        <finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+
 			</plugin>
 		</plugins>
 	</build>
