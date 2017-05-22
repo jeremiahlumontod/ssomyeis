@@ -74,9 +74,7 @@
 	</dependencies>
 
 	<build>
-        <!-- this will get rid of version info from war file name -->
-        <!-- if deployed in tomcat, this will become the root context -->
-        <finalName>${project.artifactId}</finalName>
+        <!-- for the moment, manually rename war to ssomyeis...the root context -->
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
