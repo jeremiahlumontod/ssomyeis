@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class Test3oauth2ApplicationTests {
+public class SSOMyEISApplicationTests {
 
 	@Test
 	public void contextLoads() {
