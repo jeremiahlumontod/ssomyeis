@@ -3,6 +3,11 @@ test3oauth2
 spring boot 1.5.3, oauth2, mysql for users
 
 
+> 2017 05 25
+- rename the output war file to ssomyeis.war before deploying to tomcat
+  we have hard coded the context as ssomyeis and this is the only way
+  that tomcat will use this as context name (have not found the way
+  yet to control context root in spring boot)
 
 - get new token:
 http://localhost:8080/oauth/token?grant_type=password&username=user&password=user
