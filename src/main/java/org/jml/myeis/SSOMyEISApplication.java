@@ -17,33 +17,8 @@ import java.util.Arrays;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
-@SpringBootApplication
-public class SSOMyEISApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(SSOMyEISApplication.class, args);
-    }
-
-    @Autowired
-    public void authenticationManagerNotRelatedToAutowiredAtAuthorizationServerConfig(AuthenticationManagerBuilder builder, UserRepository repo) throws Exception {
-
-        if(repo.count()==0) {
-            repo.save(new User("user","user",Arrays.asList(new Role("USER"),new Role("ACTUATOR"))));
-        }
-
-        builder.userDetailsService(new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-                return new CustomUserDetails(repo.findByUsername(s));
-            }
-        });
-    }
-
-}
-
-//
 //@SpringBootApplication
-//public class SSOMyEISApplication extends SpringBootServletInitializer {
+//public class SSOMyEISApplication {
 //
 //    public static void main(String[] args) {
 //        SpringApplication.run(SSOMyEISApplication.class, args);
@@ -65,4 +40,29 @@ public class SSOMyEISApplication {
 //    }
 //
 //}
+
+
+@SpringBootApplication
+public class SSOMyEISApplication extends SpringBootServletInitializer {
+
+    public static void main(String[] args) {
+        SpringApplication.run(SSOMyEISApplication.class, args);
+    }
+
+    @Autowired
+    public void authenticationManagerNotRelatedToAutowiredAtAuthorizationServerConfig(AuthenticationManagerBuilder builder, UserRepository repo) throws Exception {
+
+        if(repo.count()==0) {
+            repo.save(new User("user","user",Arrays.asList(new Role("USER"),new Role("ACTUATOR"))));
+        }
+
+        builder.userDetailsService(new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+                return new CustomUserDetails(repo.findByUsername(s));
+            }
+        });
+    }
+
+}
 
