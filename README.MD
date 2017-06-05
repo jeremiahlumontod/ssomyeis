@@ -4,7 +4,7 @@ ssomyeis
 > things to remember when shifting from war deployable build to IntelliJ deployable build
   from war to IntelliJ jar deploy
 
-  change
+  1) change
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
@@ -17,7 +17,7 @@ ssomyeis
             <!--<scope>provided</scope>-->
         </dependency>
 
-  in pom.xml, change
+  2) in pom.xml, change
     <packaging>war</packaging>
     <!--packaging>jar</packaging-->
   to  (basically, comment out the war entry and make jar entry to be the active
@@ -25,7 +25,7 @@ ssomyeis
     <packaging>jar</packaging>
 
 
-  in main java class, change (disable the code that extends SpringBootServletInitializer
+  3) in main java class, change (disable the code that extends SpringBootServletInitializer
   since this is for war builds, make the part that not extends SpringBootServletInitializer
   the active one)
 
