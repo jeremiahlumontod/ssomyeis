@@ -1,4 +1,85 @@
-test3oauth2
+ssomyeis
+
+2017 0605
+> things to remember when shifting from war deployable build to IntelliJ deployable build
+  from war to IntelliJ jar deploy
+
+  change
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+  to (basically, comment out the scope provided since this will use internal tomcat of spring boot)
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <!--<scope>provided</scope>-->
+        </dependency>
+
+  in pom.xml, change
+    <packaging>war</packaging>
+    <!--packaging>jar</packaging-->
+  to  (basically, comment out the war entry and make jar entry to be the active
+    <!--packaging>war</packaging-->
+    <packaging>jar</packaging>
+
+
+  in main java class, change (disable the code that extends SpringBootServletInitializer
+  since this is for war builds, make the part that not extends SpringBootServletInitializer
+  the active one)
+
+    @SpringBootApplication
+    public class SSOMyEISApplication {
+
+        public static void main(String[] args) {
+            SpringApplication.run(SSOMyEISApplication.class, args);
+        }
+
+        @Autowired
+        public void authenticationManagerNotRelatedToAutowiredAtAuthorizationServerConfig(AuthenticationManagerBuilder builder, UserRepository repo) throws Exception {
+
+            if(repo.count()==0) {
+                repo.save(new User("user","user",Arrays.asList(new Role("USER"),new Role("ACTUATOR"))));
+            }
+
+            builder.userDetailsService(new UserDetailsService() {
+                @Override
+                public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+                    return new CustomUserDetails(repo.findByUsername(s));
+                }
+            });
+        }
+
+    }
+
+
+    //@SpringBootApplication
+    //public class SSOMyEISApplication extends SpringBootServletInitializer {
+    //
+    //    public static void main(String[] args) {
+    //        SpringApplication.run(SSOMyEISApplication.class, args);
+    //    }
+    //
+    //    @Autowired
+    //    public void authenticationManagerNotRelatedToAutowiredAtAuthorizationServerConfig(AuthenticationManagerBuilder builder, UserRepository repo) throws Exception {
+    //
+    //        if(repo.count()==0) {
+    //            repo.save(new User("user","user",Arrays.asList(new Role("USER"),new Role("ACTUATOR"))));
+    //        }
+    //
+    //        builder.userDetailsService(new UserDetailsService() {
+    //            @Override
+    //            public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    //                return new CustomUserDetails(repo.findByUsername(s));
+    //            }
+    //        });
+    //    }
+    //
+    //}
+
+
+
 
 spring boot 1.5.3, oauth2, mysql for users
 
